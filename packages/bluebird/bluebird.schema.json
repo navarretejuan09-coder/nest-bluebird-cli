@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/endpointclosing/bluebird/blob/main/packages/bluebird/bluebird.schema.json",
+  "title": "Bluebird Configuration",
+  "description": "Configuration schema for bluebird.config.json",
+  "type": "object",
+  "properties": {
+    "ignore": {
+      "type": "object",
+      "description": "Rules and files to ignore",
+      "properties": {
+        "rules": {
+          "type": "array",
+          "description": "Rule IDs to suppress globally (e.g., 'bluebird/no-god-service')",
+          "items": {
+            "type": "string",
+            "pattern": "^(bluebird/|knip/)?[a-z-]+$"
+          },
+          "examples": [["bluebird/no-god-service", "bluebird/no-console-log"]]
+        },
+        "files": {
+          "type": "array",
+          "description": "Glob patterns for files to skip",
+          "items": {
+            "type": "string"
+          },
+          "examples": [["src/legacy/**", "**/*.spec.ts"]]
+        }
+      },
+      "additionalProperties": false
+    },
+    "lint": {
+      "type": "boolean",
+      "description": "Enable the ESLint (file-level) analysis pass",
+      "default": true
+    },
+    "deadCode": {
+      "type": "boolean",
+      "description": "Enable the dead-code (knip) analysis pass",
+      "default": true
+    },
+    "graphAnalysis": {
+      "type": "boolean",
+      "description": "Enable the graph (cross-file) analysis pass",
+      "default": true
+    },
+    "verbose": {
+      "type": "boolean",
+      "description": "Show all diagnostics without truncation",
+      "default": false
+    },
+    "diff": {
+      "type": "string",
+      "description": "Only check files changed from this branch or commit",
+      "examples": ["main", "HEAD~1", "develop"]
+    },
+    "includeHeuristic": {
+      "type": "boolean",
+      "description": "Include heuristic-confidence rules in analysis",
+      "default": false
+    },
+    "waivers": {
+      "type": "array",
+      "description": "Per-file rule exemptions with required reason",
+      "items": {
+        "type": "object",
+        "properties": {
+          "rule": {
+            "type": "string",
+            "description": "The rule ID to waive (e.g., 'bluebird/no-console-log')",
+            "pattern": "^(bluebird/|knip/)?[a-z-]+$"
+          },
+          "file": {
+            "type": "string",
+            "description": "File path or glob pattern to apply the waiver"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Explanation for why this waiver is needed",
+            "minLength": 1
+          }
+        },
+        "required": ["rule", "file", "reason"],
+        "additionalProperties": false
+      },
+      "examples": [
+        [
+          {
+            "rule": "bluebird/no-console-log",
+            "file": "src/main.ts",
+            "reason": "Console logging needed during bootstrap"
+          }
+        ]
+      ]
+    }
+  },
+  "additionalProperties": false
+}

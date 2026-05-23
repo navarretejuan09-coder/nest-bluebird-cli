@@ -1,0 +1,32 @@
+{
+    "name": "bluebird-monorepo",
+    "private": true,
+    "license": "UNLICENSED",
+    "packageManager": "pnpm@10.30.3",
+    "scripts": {
+      "build": "pnpm -r run build",
+      "test": "pnpm -r run test",
+      "lint": "pnpm -r run lint",
+      "lint:fix": "pnpm -r run lint:fix",
+      "dev": "pnpm --filter bluebird-nestjs run dev",
+      "typecheck": "pnpm -r run typecheck",
+      "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,yml,yaml}\"",
+      "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,yml,yaml}\"",
+      "spell": "cspell \"**/*.{ts,tsx,js,jsx,json,md}\"",
+      "prepare": "test -d .git && npx husky || true"
+    },
+    "engines": {
+      "node": ">=20"
+    },
+    "pnpm": {
+      "onlyBuiltDependencies": [
+        "esbuild"
+      ]
+    },
+    "devDependencies": {
+      "cspell": "^8.17.0",
+      "husky": "^9.1.7",
+      "lint-staged": "^15.4.0",
+      "prettier": "^3.4.2"
+    }
+  }
